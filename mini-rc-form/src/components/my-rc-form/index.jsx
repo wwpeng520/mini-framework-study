@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
 export function createForm(Cmp) {
+  // export function createForm() {
+  // return (Cmp) => {
   return class extends Component {
     constructor(props) {
       super(props);
@@ -61,4 +63,5 @@ export function createForm(Cmp) {
       return <Cmp {...this.props} form={form} />;
     }
   };
+  // };
 }

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import Input from '../components/Input';
 // import {createForm} from "rc-form";
 import { createForm } from '../components/my-rc-form';
@@ -6,14 +6,10 @@ import { createForm } from '../components/my-rc-form';
 const nameRules = { required: true, message: '请输入姓名！' };
 const passworRules = { required: true, message: '请输入密码！' };
 
-@createForm
 class MyRCForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      username: '',
-      password: '',
-    };
+    this.state = {};
   }
 
   componentDidMount() {
@@ -22,23 +18,19 @@ class MyRCForm extends Component {
   }
 
   submit = () => {
-    // const {username, password} = this.state;
     const { getFieldsValue, getFieldValue, validateFields } = this.props.form;
-    console.log('syta', getFieldsValue(), getFieldValue('username')); //sy-log
+    console.log(getFieldsValue(), getFieldValue('username'));
 
     validateFields((err, vals) => {
       if (err) {
-        console.log('失败', err); //sy-log
+        console.log('失败', err);
       } else {
-        console.log('成功', vals); //sy-log
+        console.log('成功', vals);
       }
     });
   };
 
   render() {
-    const { username, password } = this.state;
-    console.log('props', username, password); //sy-log
-
     const { getFieldDecorator } = this.props.form;
     return (
       <div>
@@ -51,4 +43,5 @@ class MyRCForm extends Component {
   }
 }
 
-export default MyRCForm;
+export default createForm(MyRCForm);
+// export default createForm()(MyRCForm);
