@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  mini-webpack
+</body>
+<!-- 使用 ES Module 模式可以直接导入使用 -->
+<!-- <script src="./index.esm.js" type="module"></script> -->
+
+<!-- 浏览器无法直接使用 commonjs 模式 -->
+<!-- <script src="./index.js"></script> -->
+
+<!--  模拟执行 webpack 打包后的代码 -->
+<script>
+  // add.js 导出
+  // exports.default = function(a, b){ return a + b }
+
+  // index.js 导入并执行
+  const add = require("add.js").default;
+  console.log(add(1, 2));
+
+  function require(file) {
+    const exports = {};
+    // 使用自运行函数，内部变量不会污染全局
+    (function (exports, code) {
+      eval(code)
+    })(exports, 'exports.default = function(a, b){ return a + b }')
+    return exports;
+  }
+</script>
+
+</html>
