@@ -1,8 +1,7 @@
 import { Component } from 'react';
 import Input from '../components/Input';
 // import {createForm} from "rc-form";
-// import { createForm } from '../components/my-rc-form0';
-import Form from '../components/my-rc-form';
+import { createForm } from '../components/my-rc-form0';
 
 const nameRules = { required: true, message: '请输入姓名！' };
 const passworRules = { required: true, message: '请输入密码！' };
@@ -35,16 +34,13 @@ class MyRCForm extends Component {
     const { getFieldDecorator } = this.props.form;
     return (
       <div>
-        <h3>MyRCForm</h3>
-        <Form onSubmit={this.submit}>
-          <Form.Item>{getFieldDecorator('username', { rules: [nameRules] })(<Input placeholder='Username' />)}</Form.Item>
-          <Form.Item>{getFieldDecorator('password', { rules: [passworRules] })(<Input placeholder='Password' />)}</Form.Item>
-          <button>submit</button>
-        </Form>
+        <h3>MyRCForm only rc-form</h3>
+        {getFieldDecorator('username', { rules: [nameRules] })(<Input placeholder='Username' />)}
+        {getFieldDecorator('password', { rules: [passworRules] })(<Input placeholder='Password' />)}
+        <button onClick={this.submit}>submit</button>
       </div>
     );
   }
 }
 
-// export default Form.createForm(MyRCForm);
-export default Form.create()(MyRCForm);
+export default createForm(MyRCForm);
