@@ -1,6 +1,7 @@
 import React from 'react';
 import store from '../store';
-import { COUNT_ADD, COUNT_DECREASE, COUNT_INCREASE, COUNT_MINUS } from '../store/count/constants';
+import { COUNT_ADD, COUNT_DECREASE, COUNT_INCREASE, COUNT_MINUS } from '../store/count/countConsts';
+import { COUNT_ADD2 } from '../store/count2/countConsts';
 
 export default class ReduxPage extends React.Component {
   unsubscribe: Function | undefined;
@@ -26,6 +27,10 @@ export default class ReduxPage extends React.Component {
 
   add = () => {
     store.dispatch({ type: COUNT_ADD, payload: 10 });
+  };
+
+  add2 = () => {
+    store.dispatch({ type: COUNT_ADD2, payload: 100 });
   };
 
   minus = () => {
@@ -60,10 +65,13 @@ export default class ReduxPage extends React.Component {
     return (
       <div>
         <h3>ReduxPage</h3>
-        <p>{store.getState()}</p>
+        {/* <p>{store.getState()}</p> */}
+        <p>count: {store.getState().count}</p>
+        <p>count2: {store.getState().count2.num}</p>
         <button onClick={this.increase}>increase</button>
         <button onClick={this.decrease}>decrease</button>
         <button onClick={this.add}>add 10</button>
+        <button onClick={this.add2}>add2 100</button>
         <button onClick={this.minus}>minus 10</button>
         <br />
         <br />

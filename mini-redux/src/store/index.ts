@@ -4,20 +4,19 @@
 // import promise from 'redux-promise';
 
 // import countReducer from './count/countReducer';
+// import countReducer2 from './count2/countReducer';
 
 // const store = createStore(
-//   countReducer,
-//   // combineReducers({ count: countReducer }),
-//   applyMiddleware(
-//     thunk, promise,
-//     logger
-//   )
+//   // countReducer,
+//   combineReducers({ count: countReducer, count2: countReducer2 }),
+//   applyMiddleware(thunk, promise, logger)
 // );
 
-import { createStore, applyMiddleware } from '../lib/m-redux';
-import countReducer from './count/countReducer';
+import { createStore, applyMiddleware, combineReducers } from '../lib/m-redux';
 import { thunk, promise, logger } from './middlewares';
+import countReducer from './count/countReducer';
+import countReducer2 from './count2/countReducer';
 
-const store = createStore(countReducer, applyMiddleware(thunk, promise, logger));
+const store = createStore(combineReducers({ count: countReducer, count2: countReducer2 }), applyMiddleware(thunk, promise, logger));
 
 export default store;

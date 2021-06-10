@@ -1,4 +1,4 @@
-import { COUNT_ADD, COUNT_MINUS, COUNT_INCREASE, COUNT_DECREASE } from './constants';
+import { COUNT_ADD, COUNT_MINUS, COUNT_INCREASE, COUNT_DECREASE } from './countConsts';
 
 export function countIncrease() {
   return {

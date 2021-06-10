@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux';
-import { COUNT_ADD, COUNT_MINUS, COUNT_INCREASE, COUNT_DECREASE } from './constants';
+import { COUNT_ADD, COUNT_MINUS, COUNT_INCREASE, COUNT_DECREASE } from './countConsts';
 
 export default function countReducer(state = 0, action: AnyAction | any) {
   const count = typeof action.payload === 'number' ? action.payload : 0;
