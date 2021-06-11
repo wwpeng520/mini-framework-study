@@ -18,14 +18,15 @@ export default class Field extends Component {
     this.forceUpdate();
   };
 
-  getControlled = () => {
+  getControlled = (childrenProps) => {
     const { name } = this.props;
     const { getFieldValue, setFieldsValue } = this.context;
     return {
+      ...childrenProps,
       value: getFieldValue(name), // "otz", // get(name) store
       onChange: (e) => {
         const newVal = e.target.value;
-        console.log('onChange: ', newVal)
+        console.log('onChange: ', newVal);
         setFieldsValue({ [name]: newVal });
       },
     };
@@ -33,7 +34,7 @@ export default class Field extends Component {
 
   render() {
     const { children } = this.props;
-    const returnChildNode = React.cloneElement(children, this.getControlled());
+    const returnChildNode = React.cloneElement(children, this.getControlled(children.props));
     return returnChildNode;
   }
 }

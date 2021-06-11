@@ -65,8 +65,9 @@ export default Form;
 import React, { Component } from 'react';
 
 export default class Field extends Component {
-  getControlled = () => {
+  getControlled = (childrenProps) => {
     return {
+      ...childrenProps,
       value: 'otz',
       onChange: (e) => {
         const newValue = e.target.value;
@@ -76,7 +77,7 @@ export default class Field extends Component {
   };
   render() {
     const { children } = this.props;
-    const returnChildNode = React.cloneElement(children, this.getControlled());
+    const returnChildNode = React.cloneElement(children, this.getControlled(children.props));
     return returnChildNode;
   }
 }
@@ -197,10 +198,11 @@ import FieldContext from './FieldContext';
 export default class Field extends Component {
   static contextType = FieldContext;
 
-  getControlled = () => {
+  getControlled = (childrenProps) => {
     const { name } = this.props;
     const { getFieldValue, setFieldsValue } = this.context;
     return {
+      ...childrenProps,
       value: getFieldValue(name), // "otz", // get(name) store
       onChange: (e) => {
         const newVal = e.target.value;
@@ -212,7 +214,7 @@ export default class Field extends Component {
 
   render() {
     const { children } = this.props;
-    const returnChildNode = React.cloneElement(children, this.getControlled());
+    const returnChildNode = React.cloneElement(children, this.getControlled(children.props));
     return returnChildNode;
   }
 }

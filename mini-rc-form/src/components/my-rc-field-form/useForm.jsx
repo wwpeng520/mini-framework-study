@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 class FormStore {
-  constructor() {
+  constructor(forceRootRender) {
+    // 强行刷新组件方法
+    this.forceRootRender = forceRootRender;
     this.store = {};
 
-    // 开辟一个空间存储Fields
+    // Fields 字段实体数组
     this.fieldEntities = [];
 
     // Form 组件传入 onFinish, onFinishFailed，提交时执行
-    this.callbacks = {};
+    this.callbacks = Object.create(null);
   }
 
   // 订阅和取消订阅，监听和取消监听要成对出现
@@ -22,11 +24,17 @@ class FormStore {
     };
   };
 
-  setCallbacks = (newCallbacks) => {
-    this.callbacks = {
-      ...this.callbacks,
-      ...newCallbacks,
-    };
+  setCallbacks = (cbs) => {
+    const { initialValues = {}, ...rest } = cbs || {};
+
+    this.setFieldsValue(initialValues);
+    this.callbacks = { ...this.callbacks, ...rest };
+  };
+
+  setInitialValues = (initialValues, mounted) => {
+    if (!mounted) {
+      this.store = { ...initialValues };
+    }
   };
 
   getFieldsValue = () => {
@@ -39,10 +47,7 @@ class FormStore {
 
   setFieldsValue = (newStore) => {
     // 1. 更新store
-    this.store = {
-      ...this.store,
-      ...newStore,
-    };
+    this.store = { ...this.store, ...newStore };
 
     // 2. 更新组件（只会更新对应的 Field 组件）
     this.fieldEntities.forEach((entity) => {
@@ -55,9 +60,10 @@ class FormStore {
   };
 
   validate = () => {
+    // antd@4 中使用的是 async-validator 校验库
+
     // 存储错误信息
     let err = [];
-
     this.fieldEntities.forEach((field) => {
       const { name, rules } = field.props;
       let rule = rules && rules[0];
@@ -94,6 +100,7 @@ class FormStore {
       setFieldsValue: this.setFieldsValue,
       setFieldEntities: this.setFieldEntities,
       setCallbacks: this.setCallbacks,
+      setInitialValues: this.setInitialValues,
       validate: this.validate,
       submit: this.submit,
     };
@@ -101,19 +108,28 @@ class FormStore {
 }
 
 // const [form] = Form.useForm();
-// form 对象上挂载了获取、变更 formStore 等方法：form.getFieldsValue, form.setFieldsValue...
 export default function useForm(form) {
+  // form 可传可不传
+  // 传的时候直接使用传入的 form 实例，否则创建一个实例，并且每个 Form 只会创建一个 form 实例
   const formRef = React.useRef();
+
+  // 强行刷新组件方法
+  const [, forceUpdate] = useState({});
 
   if (!formRef.current) {
     // formStore 在整个生命周期中只能初始化一次，否则每次更新去初始化，那每次初始化前表单变更的数据都会丢失
     if (form) {
       formRef.current = form;
     } else {
-      const formStore = new FormStore();
+      // 调用此方法可以让组件刷新
+      const forceReRender = () => {
+        forceUpdate({});
+      };
+      const formStore = new FormStore(forceReRender);
       formRef.current = formStore.getForm();
     }
   }
 
+  // 一般自定义 hooks 返回一个数组，方便拓展，且不限制导出项的名称
   return [formRef.current];
 }
