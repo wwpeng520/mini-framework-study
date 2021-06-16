@@ -1,6 +1,6 @@
-import { Component } from 'react';
+import { Component, useCallback } from 'react';
+import { connect, useSelector, useDispatch } from '../lib/m-react-redux';
 // import { connect } from "react-redux";
-import { connect } from '../lib/m-react-redux';
 // import { bindActionCreators } from '../lib/m-redux';
 import { COUNT_ADD, COUNT_DECREASE, COUNT_INCREASE } from '../store/count/countConsts';
 import { IStoreProps } from '../store/interface';
@@ -42,5 +42,22 @@ class ReactReduxPage extends Component<any, any> {
     );
   }
 }
+
+// function ReactReduxPage() {
+//   const count = useSelector(({ count }: IStoreProps) => count);
+//   const dispatch = useDispatch();
+
+//   const add = useCallback(() => {
+//     dispatch({ type: COUNT_ADD, payload: 100 });
+//   }, [dispatch]);
+
+//   return (
+//     <div>
+//       <h3>ReactReduxHookPage</h3>
+//       <button onClick={add}>{count}</button>
+//     </div>
+//   );
+// }
+
 export default ReactReduxPage;
 // connect(state => state)(ReactReduxPage);

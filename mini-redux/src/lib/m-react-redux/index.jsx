@@ -1,7 +1,9 @@
 import { useContext, useLayoutEffect } from 'react';
 import { bindActionCreators } from '../m-redux';
 import Context from './context';
-import { useForceUpdate } from './hooks';
+import { useForceUpdate, useDispatch, useSelector } from './hooks';
+
+export { useForceUpdate, useDispatch, useSelector };
 
 export function Provider({ children, store }) {
   return <Context.Provider value={store}>{children}</Context.Provider>;
