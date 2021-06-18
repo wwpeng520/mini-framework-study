@@ -1,51 +1,58 @@
 import { iterator, promise } from './is';
-import { TAKE, PUT, CALL, FORK, ALL } from './effectTypes';
+import * as effectTypes from './effectTypes';
 import proc from './proc';
 
-function runTakeEffect(env, { channel = env.channel, pattern }, cb) {
-  const matcher = (input) => input.type === pattern;
-  channel.take(cb, matcher);
+// { type: 'TAKE', payload: { pattern: 'LOGIN_SAGA' } }
+function runTakeEffect(env, payload, next) {
+  const matcher = (action) => action.type === payload.pattern;
+  // channel.take：订阅（根据 matcher）
+  env.channel.take(next, matcher);
 }
 
-function runPutEffect(env, { action }, cb) {
-  const result = env.dispatch(action);
-  cb(result);
+// { type: 'PUT', payload: { action: { type: 'LOGIN', payload: ... } } }
+function runPutEffect(env, payload, next) {
+  // middleware.js 里增强了 dispatch 并执行了 channel.put(...)
+  const result = env.dispatch(payload.action);
+  next(result);
 }
 
-function runCallEffect(env, { fn, args }, cb) {
-  const result = fn.apply(null, args);
+// 阻塞
+function runCallEffect(env, payload, next) {
+  const result = payload.fn.apply(null, payload.args);
   if (promise(result)) {
-    result.then((data) => cb(data)).catch((error) => cb(error, true));
+    result.then((data) => next(data)).catch((error) => next(error, true));
     return;
   }
 
   if (iterator(result)) {
-    proc(env, result, cb);
+    proc(env, result, next);
     return;
   }
 
-  cb(result);
+  next(result);
 }
 
-function runForkEffect(env, { fn, args }, cb) {
-  // 先执行fn，fn是  generator函数，执行 fn 先拿到遍历器对象，然后再执行遍历器对象的 next
-  const taskIterator = fn.apply(null, args);
+// 非阻塞
+function runForkEffect(env, payload, next) {
+  // 先执行fn，fn是 generator 函数，执行 fn 先拿到遍历器对象，然后再执行遍历器对象的 next
+  const taskIterator = payload.fn.apply(null, payload.args);
   proc(env, taskIterator);
-  cb();
+  next();
 }
 
-function runAllEffect(env, effects, cb) {
-  const len = effects.length;
+function runAllEffect(env, payload, next) {
+  const len = payload.length;
   for (let i = 0; i < len; i++) {
-    proc(env, effects[i]);
+    proc(env, payload[i]);
   }
 }
 
 const effectRunnerMap = {
-  [TAKE]: runTakeEffect,
-  [PUT]: runPutEffect,
-  [CALL]: runCallEffect,
-  [FORK]: runForkEffect,
-  [ALL]: runAllEffect,
+  [effectTypes.TAKE]: runTakeEffect,
+  [effectTypes.PUT]: runPutEffect,
+  [effectTypes.CALL]: runCallEffect,
+  [effectTypes.FORK]: runForkEffect,
+  [effectTypes.ALL]: runAllEffect,
 };
+
 export default effectRunnerMap;

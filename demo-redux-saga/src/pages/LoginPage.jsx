@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { login } from '../action/user';
+import { login } from '../store/actions/user';
 
 @connect(({ user }) => ({ isLogin: user.isLogin, err: user.err, loading: user.loading }), { login })
 class LoginPage extends Component {

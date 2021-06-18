@@ -1,9 +1,8 @@
 // * 最终目的： 通过 redux 的 store.dispatch 修改状态
 
-// import { call, put, takeEvery, take, fork } from 'redux-saga/effects';
-import { call, put, take, fork } from '../lib/m-redux-saga/effects';
-import LoginService from '../service/login';
-import { LOGIN_FAILURE, LOGIN_SAGA, LOGIN_SUCCESS, REQUEST } from './const';
+import { call, put, takeEvery, take, fork } from 'redux-saga/effects';
+import LoginService from '../../service/login';
+import { LOGIN_FAILURE, LOGIN_SAGA, LOGIN_SUCCESS, REQUEST } from '../constants';
 
 // * redux-saga API 说明：https://redux-saga-in-chinese.js.org/docs/api/
 

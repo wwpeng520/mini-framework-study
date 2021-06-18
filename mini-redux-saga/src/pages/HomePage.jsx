@@ -1,26 +1,23 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
-// import {Redirect} from "../k-react-router-dom/";
+import { connect } from 'react-redux';
+import { increase, add, increaseSaga, addSaga } from '../store/actions/count';
 
 class HomePage extends Component {
-  componentDidMount() {
-    // console.log("componentDidMount");
-  }
-
-  componentWillUnmount() {
-    // console.log("componentWillUnmount");
-  }
   render() {
-    // console.log("HomePage props", this.props);
-
-    // return <Redirect to="/welcome" />;
-
+    const { count, increase, add, increaseSaga, addSaga } = this.props;
     return (
       <div>
         <h3>HomePage</h3>
+        <div>{count.num}</div>
+        <button onClick={increase}>increase</button>
+        <button onClick={increaseSaga}>increaseSaga</button>
+        <button onClick={() => add(10)}>add 10</button>
+        <button onClick={() => addSaga(10)}>addSaga 10</button>
       </div>
     );
   }
 }
 
-export default HomePage;
+const mapStateToProps = (state) => ({ count: state.count });
+const mapDispatchToProps = { increase, add, increaseSaga, addSaga };
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

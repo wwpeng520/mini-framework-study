@@ -1,9 +1,15 @@
 import { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { login } from '../action/user';
+import { login } from '../store/actions/user';
 
-@connect(({ user }) => ({ isLogin: user.isLogin, err: user.err, loading: user.loading }), { login })
+@connect(
+  ({ user }) =>
+    // mapStateToProps
+    ({ isLogin: user.isLogin, err: user.err, loading: user.loading }),
+  // mapDispatchToProps：对象或函数
+  { login }
+)
 class LoginPage extends Component {
   constructor(props) {
     super(props);

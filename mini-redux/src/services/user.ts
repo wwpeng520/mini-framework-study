@@ -23,7 +23,7 @@ const userService = {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (userInfo.id === 123) {
-          resolve({ ...userInfo, score: '100' });
+          resolve({ ...userInfo, score: 10 });
         } else {
           reject({ msg: '获取详细信息错误' });
         }

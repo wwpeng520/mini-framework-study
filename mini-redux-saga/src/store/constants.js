@@ -1,0 +1,14 @@
+export const REQUEST = 'REQUEST';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const LOGIN_SAGA = 'LOGIN_SAGA';
+
+export const COUNT_INCREASE = 'COUNT_INCREASE';
+export const COUNT_INCREASE_SAGA = 'COUNT_INCREASE_SAGA';
+export const COUNT_DECREASE = 'COUNT_DECREASE';
+export const COUNT_DECREASE_SAGA = 'COUNT_DECREASE_SAGA';
+export const COUNT_ADD = 'COUNT_ADD';
+export const COUNT_ADD_SAGA = 'COUNT_ADD_SAGA';
+export const COUNT_MINUS = 'COUNT_MINUS';
+export const COUNT_MINUS_SAGA = 'COUNT_MINUS_SAGA';
