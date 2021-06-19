@@ -1,11 +1,7 @@
 import * as effectTypes from './effectTypes';
-// import { IO } from './symbols';
+import { IO } from './symbols';
 
-const makeEffect = (type, payload) => ({
-  // [IO]: IO,
-  type,
-  payload,
-});
+const makeEffect = (type, payload) => ({ [IO]: IO, type, payload });
 
 /**
  * @param {*} pattern - 动作类型：'LOGIN_SAGA'

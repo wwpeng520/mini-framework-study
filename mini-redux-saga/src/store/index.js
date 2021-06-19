@@ -4,10 +4,10 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 // import createSagaMiddleware from '../lib/m-redux-saga';
 import createSagaMiddleware from '../lib/m-redux-saga';
 
-import loginReducer from './loginReducer';
-import countReducer from './countReducer';
-// import loginSaga from './saga/login';
-import rootSaga from './saga';
+import loginReducer from './reducers/loginReducer';
+import countReducer from './reducers/countReducer';
+// import loginSaga from './sagas/login';
+import rootSaga from './sagas';
 
 // 创建一个 Redux middleware，并将 Sagas 连接到 Redux Store
 const sagaMiddleware = createSagaMiddleware();

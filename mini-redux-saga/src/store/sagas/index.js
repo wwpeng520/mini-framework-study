@@ -32,7 +32,7 @@ export default function* rootSaga() {
 function* countIncreaseSaga() {
   // * 一直处于监听状态
   // yield takeEvery(LOGIN_SAGA, loginHandle);
-  // takeEvery, takeLatest, takeLeading, throttle
+  // takeEvery(封装 take 和 fork 来实现的), takeLatest, takeLeading, throttle
   // * OR
   while (true) {
     console.log(`%c等待${COUNT_INCREASE_SAGA}动作`, 'color: green;');

@@ -1,2 +1,4 @@
 /lib-resources
 /demo-boilerplate
+/demo-*
+/init-*

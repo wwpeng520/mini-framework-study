@@ -1,4 +1,4 @@
-import { REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS } from './constants';
+import { REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS } from '../constants';
 
 const userInit = {
   isLogin: false,

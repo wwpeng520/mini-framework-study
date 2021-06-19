@@ -11,7 +11,7 @@ export function stdChannel() {
    */
   function take(cb, matcher) {
     // 将 matcher 作为属性放到了回调函数上，这么做的原因是为了让外部可以自定义匹配方法，而不是简单的事件名称匹配。
-    // Redux-Saga 本身就支持好几种匹配模式，包括字符串，Symbol，数组等。
+    // redux-saga 本身就支持好几种匹配模式，包括字符串，Symbol，数组等。
     cb[MATCH] = matcher;
     // take 只触发一次
     cb.cancel = () => {

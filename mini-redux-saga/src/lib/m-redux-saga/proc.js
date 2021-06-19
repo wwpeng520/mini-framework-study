@@ -1,4 +1,5 @@
 import effectRunnerMap from './effectRunnerMap';
+import { IO } from './symbols';
 
 /**
  * co 的原理：自动运行迭代器
@@ -27,7 +28,7 @@ export default function proc(env, iterator) {
   }
 
   function runEffect(effect, next) {
-    if (effect) {
+    if (effect && effect[IO]) {
       // effect.type: TAKE, PUT, ...
       const effectRunner = effectRunnerMap[effect.type];
       effectRunner(env, effect.payload, next);
