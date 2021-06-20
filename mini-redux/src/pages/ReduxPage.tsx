@@ -37,6 +37,9 @@ export default class ReduxPage extends React.Component {
     store.dispatch({ type: COUNT_MINUS, payload: 10 });
   };
 
+  // dispatch(action) 
+  // action:{type: 'ADD', payload: ...}
+  // action 为函数
   asyncIncrease = () => {
     store.dispatch((dispatch: any, getState: any) => {
       console.log('get state0: ', getState());
@@ -57,6 +60,7 @@ export default class ReduxPage extends React.Component {
     });
   };
 
+  // action 为 Promise 函数
   asyncPromise = () => {
     store.dispatch(Promise.resolve({ type: COUNT_INCREASE }));
   };

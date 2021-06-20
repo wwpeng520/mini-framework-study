@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export function connect(mapStateToProps: any, mapDispatchToProps?: any): any;
+export function connect(mapStateToProps?: any, mapDispatchToProps?: any): any;
 
 interface ProviderProps {
   store: any;

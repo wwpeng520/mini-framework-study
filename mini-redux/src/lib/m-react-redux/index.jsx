@@ -9,34 +9,24 @@ export function Provider({ children, store }) {
   return <Context.Provider value={store}>{children}</Context.Provider>;
 }
 
-// @connect(
-//   // mapStateToProps 把state map（映射） props上一份
-//   ({count}) => ({count}),
-
-//   // mapDispatchToProps object | function
-//   {
-//     add: () => ({type: "ADD"}),
-//     minus: () => ({type: "MINUS"}),
-//   }
-//   // (dispatch) => {
-//   //   let creators = {
-//   //     add: () => ({type: "ADD"}),
-//   //     minus: () => ({type: "MINUS"}),
-//   //   };
-
-//   //   creators = bindActionCreators(creators, dispatch);
-
-//   //   return {dispatch, ...creators};
-//   // }
-// )
-
 // export const connect = (mapStateToProps, mapDispatchToProps) => (WrapperCmp) => (props) => {
 //   return <WrappedComponent .../>
 // }
+
+function hasChanged(oldState, newState) {
+  for (const key in oldState) {
+    if (oldState[key] !== newState[key]) {
+      return true;
+    }
+  }
+  return false;
+}
+
 export const connect = (mapStateToProps, mapDispatchToProps) => {
   return (WrapperCmp) => (props) => {
     // 接收跨层级传递下来的 store
     const store = useContext(Context);
+    const oriData = mapStateToProps ? mapStateToProps(store.getState()) : { state: store.getState() };
 
     const stateProps = mapStateToProps(store.getState());
 
@@ -49,11 +39,22 @@ export const connect = (mapStateToProps, mapDispatchToProps) => {
     const forceUpdate = useForceUpdate();
 
     // useEffect 有延迟, 可能导致未订阅(subscribe)
+    // useLayoutEffect(() => {
+    //   store.subscribe(() => {
+    //     forceUpdate();
+    //   });
+    //   // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [store]);
     useLayoutEffect(() => {
       store.subscribe(() => {
-        forceUpdate();
+        const newData = mapStateToProps ? mapStateToProps(store.getState()) : { state: store.getState() };
+        if (hasChanged(oriData, newData)) {
+          forceUpdate();
+        }
       });
-    }, [store, forceUpdate]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [mapStateToProps]);
+
     return <WrapperCmp {...props} {...stateProps} {...dispatchProps} />;
   };
 };

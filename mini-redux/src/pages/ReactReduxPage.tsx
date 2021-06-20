@@ -1,9 +1,14 @@
 import { Component, useCallback } from 'react';
-import { connect, useSelector, useDispatch } from '../lib/m-react-redux';
+import {
+  connect,
+  // useSelector, useDispatch
+} from '../lib/m-react-redux';
 // import { connect } from "react-redux";
 // import { bindActionCreators } from '../lib/m-redux';
 import { COUNT_ADD, COUNT_DECREASE, COUNT_INCREASE } from '../store/count/countConsts';
 import { IStoreProps } from '../store/interface';
+import CountChild from '../components/CountChild';
+import Count2Child from '../components/Count2Child';
 
 // hoc是个函数，接收组件作为参数，返回新的组件
 @connect(
@@ -59,5 +64,16 @@ class ReactReduxPage extends Component<any, any> {
 //   );
 // }
 
-export default ReactReduxPage;
+// export default ReactReduxPage;
 // connect(state => state)(ReactReduxPage);
+
+export default function App() {
+  return (
+    <div>
+      <ReactReduxPage />
+
+      <CountChild />
+      <Count2Child />
+    </div>
+  );
+}
