@@ -8,6 +8,7 @@ export default class Form extends React.Component {
     this.state = {};
   }
 
+  // 使用形如 Form.create()(App)
   static create = (...args) => (Cmp) => {
     // return createForm(...args);
     return createForm(Cmp);
