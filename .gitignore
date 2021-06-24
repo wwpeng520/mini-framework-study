@@ -2,3 +2,5 @@
 /demo-boilerplate
 /demo-*
 /init-*
+!/init-vite-demo
+/mini-rc-form/src/lib/ant-design-*
