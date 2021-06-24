@@ -14,6 +14,7 @@ export default class Field extends Component {
     }
   }
 
+  // setFieldsValue 时判断需要更新的表单项，并调用此更新，实现最小更新
   onStoreChange = () => {
     this.forceUpdate();
   };
@@ -25,16 +26,19 @@ export default class Field extends Component {
       ...childrenProps,
       value: getFieldValue(name), // "otz", // get(name) store
       onChange: (e) => {
-        const newVal = e.target.value;
-        console.log('onChange: ', newVal);
-        setFieldsValue({ [name]: newVal });
+        setFieldsValue({ [name]: e.target.value });
       },
     };
   };
 
   render() {
-    const { children } = this.props;
+    const { children, label } = this.props;
     const returnChildNode = React.cloneElement(children, this.getControlled(children.props));
-    return returnChildNode;
+    return (
+      <div style={{ display: 'flex' }}>
+        <div>{label}</div>
+        <div style={{ flex: 1 }}>{returnChildNode}</div>
+      </div>
+    );
   }
 }

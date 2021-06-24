@@ -6,6 +6,7 @@ export default function AntdFormPage() {
   const [form] = Form.useForm();
 
   useEffect(() => {
+    // 如果是静态数据，可以使用 Form 的 initialValues 属性初始化
     // 模拟网络请求
     setTimeout(() => {
       form.setFieldsValue({
@@ -15,9 +16,13 @@ export default function AntdFormPage() {
   }, [form]);
 
   function onFinish(values) {
+    // antd@3 提交函数 onSubmit 不会传入 values，需要通过 getFieldsValue 或者 validateFields/validateFieldsAndScroll 获取表单的数据
+    // antd@3 使用的是高级组件的方式，通过组件的 props.getFieldsValue 等方法获取表单数据
+    // antd@4 使用的是开辟空间存储状态，最外层 Form 上可以直接获取 formInstance，获取状态和调用 onFinish 等方法
     console.log('onFinish: ', values);
   }
 
+  // 表单校验失败执行
   function onFinishFailed(values) {
     console.log('onFinishFailed: ', values);
   }
@@ -33,7 +38,9 @@ export default function AntdFormPage() {
       <Form.Item name='mobile' label='手机号' rules={[{ required: true, message: '请输入手机号！' }]}>
         <Input placeholder='请输入mobile' />
       </Form.Item>
-      <Button htmlType='submit' type="primary">提交</Button>
+      <Button htmlType='submit' type='primary'>
+        提交
+      </Button>
     </Form>
   );
 }

@@ -8,8 +8,8 @@ import AntdFormPage from './pages/AntdForm4Page';
 
 export default function App() {
   return (
-    <>
+    <div style={{ padding: 20 }}>
       <AntdFormPage />
-    </>
+    </div>
   );
 }
