@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Input, Button } from 'antd4';
-import Form from '../components/antd-form4';
+import Form from '../components/antd-form4-1';
 
 export default function AntdFormPage() {
   const [form] = Form.useForm();
@@ -20,6 +20,7 @@ export default function AntdFormPage() {
     // antd@3 使用的是高级组件的方式，通过组件的 props.getFieldsValue 等方法获取表单数据
     // antd@4 使用的是开辟空间存储状态，最外层 Form 上可以直接获取 formInstance，获取状态和调用 onFinish 等方法
     console.log('onFinish: ', values);
+    console.log('onFinish form.getFieldsValue: ', form.getFieldsValue());
   }
 
   // 表单校验失败执行
