@@ -1,6 +1,7 @@
 import { MATCH } from './symbols';
 
 // channel 是 redux-saga 保存回调和触发回调的地方，类似于发布订阅模式
+// 类似于 window 上的 MessageChannel（postMessage，onmessage）
 export function stdChannel() {
   let currentTakers = [];
 

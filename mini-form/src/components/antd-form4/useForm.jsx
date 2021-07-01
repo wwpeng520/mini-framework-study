@@ -25,16 +25,11 @@ class FormStore {
   };
 
   setCallbacks = (cbs) => {
-    const { initialValues = {}, ...rest } = cbs || {};
-
-    this.setFieldsValue(initialValues);
-    this.callbacks = { ...this.callbacks, ...rest };
+    this.callbacks = { ...this.callbacks, ...cbs };
   };
 
-  setInitialValues = (initialValues, mounted) => {
-    if (!mounted) {
-      this.store = { ...initialValues };
-    }
+  setInitialValues = (initialValues) => {
+    this.store = { ...initialValues };
   };
 
   getFieldsValue = () => {

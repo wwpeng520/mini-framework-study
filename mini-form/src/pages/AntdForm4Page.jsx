@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import { Input, Button } from 'antd4';
+import { Button, Input } from 'antd4';
 import Form from '../components/antd-form4';
+// import Input from '../components/Input';
 
 export default function AntdFormPage() {
   const [form] = Form.useForm();

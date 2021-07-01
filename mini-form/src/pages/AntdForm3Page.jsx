@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Button, Input } from 'antd3';
 import Form from '../components/antd-form3';
+// import Input from '../components/Input';
 
 function Antd3FormPage({ form }) {
   const { getFieldDecorator, getFieldsValue, getFieldValue, setFieldsValue, validateFields } = form;

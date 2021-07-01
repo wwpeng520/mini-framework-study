@@ -15,9 +15,10 @@ export default function Form({ form, children, onFinish, onFinishFailed, initial
     onFinish,
     onFinishFailed,
   });
+
   // 初始化数据，只能初始化一次
-  formInstance.setInitialValues(initialValues, mountRef.current);
   if (!mountRef.current) {
+    formInstance.setInitialValues(initialValues);
     mountRef.current = true;
   }
 
@@ -26,6 +27,9 @@ export default function Form({ form, children, onFinish, onFinishFailed, initial
       onSubmit={(e) => {
         e.preventDefault();
         formInstance.submit();
+        // 应该把提交的调用（onFinish, onFinishFailed）放在 useForm 上：
+        // 1.因为用户可能会自己定义提交按钮和操作，不一定会调用此方法
+        // 2.提交方法放在 useForm 上只需要定义一次，任意地方调用
       }}
     >
       <FieldContext.Provider value={formInstance}>{children}</FieldContext.Provider>
